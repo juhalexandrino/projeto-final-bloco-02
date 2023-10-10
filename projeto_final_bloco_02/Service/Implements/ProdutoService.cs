@@ -12,7 +12,6 @@ namespace projeto_final_bloco_02.Service.Implements
         {
             _context = context;
         }
-
         public async Task<Produto?> Create(Produto produto)
         {
             await _context.Produtos.AddAsync(produto);

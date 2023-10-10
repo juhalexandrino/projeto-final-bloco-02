@@ -17,6 +17,12 @@ namespace projeto_final_bloco_02
             // Add services to the container.
             builder.Services.AddControllers();
 
+            builder.Services.AddControllers()
+               .AddNewtonsoftJson(options =>
+               {
+                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+               });
+
             // Conexão com o banco de dados
             var connectionString = builder.Configuration.
                     GetConnectionString("DefaultConnection");
@@ -27,9 +33,11 @@ namespace projeto_final_bloco_02
 
             // Validação das Entidades
             builder.Services.AddTransient<IValidator<Produto>, ProdutoValidator>();
+            builder.Services.AddTransient<IValidator<Categoria>, CategoriaValidator>();
 
             // Registrar as Classes e Interfaces Service
             builder.Services.AddScoped<IProdutoService, ProdutoService>();
+            builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -65,10 +73,10 @@ namespace projeto_final_bloco_02
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+
+            app.UseCors("MyPolicy");
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

@@ -6,7 +6,6 @@ using projeto_final_bloco_02.Service;
 
 namespace projeto_final_bloco_02.Controllers
 {
-    [Authorize]
     [Route("~/produtos")]
     [ApiController]
     public class ProdutoController : ControllerBase
@@ -37,7 +36,7 @@ namespace projeto_final_bloco_02.Controllers
             return Ok(Resposta);
         }
 
-        [HttpGet("titulo/{titulo}")]
+        [HttpGet("nome/{nome}")]
         public async Task<ActionResult> GetByNome(string nome)
         {
             return Ok(await _produtoService.GetByNome(nome));
